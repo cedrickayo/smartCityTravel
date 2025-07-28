@@ -1,0 +1,6 @@
+pyspark
+kafka-python
+apache-airflow-providers-apache-spark
+azure-storage-file
+spark
+apache-airflow-providers-docker
