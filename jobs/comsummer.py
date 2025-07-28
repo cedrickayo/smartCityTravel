@@ -408,7 +408,7 @@ def main():
             #                               col("arrival.longitude").alias("lon")
             #                           )))
 
-            print("dernier schema")
+            #print("dernier schema")
             joined_df.printSchema()
             write_to_influxdb(joined_df)
 
