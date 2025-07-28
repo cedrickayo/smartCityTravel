@@ -385,13 +385,13 @@ def main():
             # df_real_time.printSchema()
             #
             print("-------------------------------------------Ecrire dans Influxdb-------------------------------")
-            write_to_influxdb(final_df_trajet)
+            #write_to_influxdb(final_df_trajet)
 
             #join all data frame in one using the trajet ID as key join
-            # joined_df = (final_df_trajet.join(final_df_cars, (final_df_trajet['tripId'] == final_df_cars['IDTrajet']))
-            #                             .join(final_df_emergency,(final_df_trajet['tripId'] == final_df_emergency['emergencyTrip']))
-            #                             .join(final_df_weather,(final_df_trajet['tripId'] == final_df_weather['weatherTrip']))
-            #              )
+            joined_df = (final_df_trajet.join(final_df_cars, (final_df_trajet['tripId'] == final_df_cars['IDTrajet']))
+                                        .join(final_df_emergency,(final_df_trajet['tripId'] == final_df_emergency['emergencyTrip']))
+                                        .join(final_df_weather,(final_df_trajet['tripId'] == final_df_weather['weatherTrip']))
+                         )
 
             # colones = ('IDTrajet', 'emergencyTrip', 'weatherTrip')
             # dropped_colum=joined_df.drop(*colones)
@@ -408,9 +408,9 @@ def main():
             #                               col("arrival.longitude").alias("lon")
             #                           )))
 
-            # print("dernier schema")
-            # joined_df.printSchema()
-            # write_to_influxdb(joined_df)
+            print("dernier schema")
+            joined_df.printSchema()
+            write_to_influxdb(joined_df)
 
 
 

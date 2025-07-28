@@ -146,6 +146,8 @@ def write_data_into_influx(df, batchId):
 def write_to_influxdb(joined_dataframe):
     query = joined_dataframe.writeStream \
         .foreachBatch(write_data_into_influx) \
+        .option("truncate", "false") \
+        .trigger(once=True) \
         .option("checkpointLocation", "/opt/bitnami/spark/checkpoint_dir_influx") \
         .start()
     query.awaitTermination()
