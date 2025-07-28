@@ -135,7 +135,7 @@ def defin_schema_for_vehicule():
         StructField("IDTrajet", StringType(), True),
         StructField("IDChauffeur", StringType(), True),
         StructField("speed", FloatType(), False),
-        StructField("DateDebutTrajet", DateType(), True),
+        StructField("DateDebutTrajet", TimestampType(), True),
 
     ])
 
@@ -166,7 +166,7 @@ def defin_schema_for_trajet():
 
 def defin_schema_for_emergency():
     schema = StructType([
-        StructField("EmergencyTime", DateType(), False),
+        StructField("EmergencyTime", TimestampType(), False),
         StructField("evehicleID", StringType(), False),
         StructField("emergencyTrip", StringType(), False),
         StructField("emergencyType", IntegerType(), True),
@@ -177,7 +177,7 @@ def defin_schema_for_emergency():
 def defin_schema_for_weather():
 
     schema = StructType([
-        StructField("WeatherTime", DateType(), False),
+        StructField("WeatherTime", TimestampType(), False),
         StructField("wvehicleID", StringType(), False),
         StructField("weatherTrip", StringType(), False),
         StructField("weatherCondition", StringType(), True),
