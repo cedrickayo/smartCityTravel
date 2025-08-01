@@ -4,27 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/smartCityTravel.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/airflow/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/airflow/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ModelCity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/Stockage/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/Stockage/mod_stockage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/comsummer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jobs/requirements.txt" afterDir="false" />
+    <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="Joined all dataframe">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ModelCity.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelCity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jobs/Stockage/mod_stockage.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/Stockage/mod_stockage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jobs/comsummer.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/comsummer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,17 +131,90 @@
       <option name="presentableId" value="Default" />
       <updated>1745635996882</updated>
     </task>
+    <task id="LOCAL-00001" summary="screaming to influxdb">
+      <option name="closed" value="true" />
+      <created>1753699537054</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753699537054</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Modify field type data type to timestam type">
+      <option name="closed" value="true" />
+      <created>1753700003611</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753700003612</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Modify field type data type to timestam type">
+      <option name="closed" value="true" />
+      <created>1753700569763</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1753700569763</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Joined all dataframe">
+      <option name="closed" value="true" />
+      <created>1753700713891</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753700713891</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
+    <option name="RECENT_FILTERS">
       <map>
-        <entry key="MAIN">
+        <entry key="User">
           <value>
-            <State />
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
     </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="user">
+                    <value>
+                      <list>
+                        <option value="*" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="screaming to influxdb" />
+    <MESSAGE value="Modify field type data type to timestam type" />
+    <MESSAGE value="Joined all dataframe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Joined all dataframe" />
   </component>
 </project>
