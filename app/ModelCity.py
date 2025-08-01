@@ -17,10 +17,11 @@ from kafka import KafkaProducer
 
 
 list_ville = [
-    {"name": "Douala", "latitude": "4.04827000", "longitude": "9.70428000"},
-    {"name": "Yaounde", "latitude": "3.86667000", "longitude": "11.51667000"},
-    {"name": "Nkongsamba", "latitude": "4.95470000", "longitude": "9.94040000"},
-    {"name": "Edea", "latitude": "3.63972000", "longitude": "9.77694000"}
+    {"name": "Domicile", "latitude": "46.851863", "longitude": "-71.207157"},
+    {"name": "Bureau", "latitude": "46.797777", "longitude": "-71.263931"},
+    {"name": "Orsainville", "latitude": "46.883835", "longitude": "-71.290048"},
+    {"name": "Chateauguay", "latitude": "45.356965", "longitude": "-73.707444"},
+    {"name": "Saint-Hyacinthe", "latitude": "45.615659", "longitude": "-72.967415"}
 ]
 
 
@@ -398,7 +399,7 @@ def main():
                     start = time.time()
                 else :
                     print("Pas voiture en trajet actuellement.... attente de nouveau trajet")
-                    sleep(5)
+                    sleep(1)
 
         start = time.time()
 

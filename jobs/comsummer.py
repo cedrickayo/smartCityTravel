@@ -1,8 +1,9 @@
 # cette partie consistera à se connecter sur les diiferntes topics sur kafka via spark, lire les donner de kafka les stocker dans un format parquet
 #pour ensuite etre envoyé dans un bucket s3, ou encore les stocker dans une BD noSQL tel que influxDB, Elastisearch ou prometheurs,
 # ensuite Grafana ou/et kibana  pour la visualisation des données temps reels
-
+import concurrent.futures
 import logging
+import os
 
 from elasticsearch import Elasticsearch
 from pyspark.sql import SparkSession
@@ -27,12 +28,15 @@ def create_spark_session():
             .appName("Streaming Data from IoT devices to influxDB using KAFKA and Spark") \
             .master("local[*]") \
             .config("spark.jars.packages",
-                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0") \
+                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0,org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-s3:1.12.661") \
             .config("spark.jars", "postgresql-42.6.0.jar") \
             .config("spark.cassandra.connection.host", "cassandra") \
             .config("spark.cassandra.connection.port", "9042") \
             .config("spark.es.nodes", "elasticsearch") \
             .config("spark.es.port", "9200") \
+            .config("spark.hadoop.fs.s3a.access.key", os.getenv("AWS_ACCESS_KEY")) \
+            .config("spark.hadoop.fs.s3a.secret.key", os.getenv("AWS_SECRET_KEY")) \
+            .config("spark.hadoop.fs.s3a.session.token", os.getenv("AWS_TOKEN_KEY")) \
             .getOrCreate()
 
         logging.info("created spark session successfully")
@@ -66,62 +70,71 @@ def read_data_from_kafka(spark:SparkSession, topic):
 
     return df
 
-def write_data_into_db(df, batchId):
-    print("Batch id: " + str(batchId))
+def write_data_into_s3(check):
+    def write_data(df, batchId):
+        print("Batch id: " + str(batchId))
 
-    # write to parquet
-    print("Writing to parquet .....")
-    try:
-        df.write.format("parquet").mode("append").save('/opt/bitnami/spark/parquet/user_data.parquet')
-        logging.info("successfully write in parquet format")
-    except Exception as e:
-        logging.error(f"impossible de stocker dans le format parquet à cause de {e}")
+        # write to parquet
+        # .save('/opt/bitnami/spark/parquet/user_data.parquet')
+        #.option('fs.s3a.committer.name', 'partitioned')
+        #.partitionBy("column_name")
+        print("Writing to s3 in parquet format .....")
+        try:
+            (df.write
+             .format("parquet")
+             .mode("append")
+             .save(f"s3a://spark-streaming-bucket-cedric/raw_data/{check}")
+             )
+            logging.info("successfully write in parquet format")
+        except Exception as e:
+            logging.error(f"impossible de se connecter au bucket s3 à cause de {e}")
 
 
 
 
 
-    print("Writing to Elasticsearch .....")
-    # write_to_elastidsearch(df)
+        #print("Writing to Elasticsearch .....")
+        # write_to_elastidsearch(df)
 
 
 
-    # #write to postgres DB
-    # print("Writing to postgres DB .....")
-    # try:
-    #     (df.write
-    #      .mode("append")
-    #      .format("jdbc")
-    #      .option("url", "jdbc:postgresql://postgres:5432/postgres")
-    #      .option("driver","org.postgresql.Driver")
-    #      .option("dbtable","test_keyspace.users")
-    #      .option("user", "airflow")
-    #      .option("password", "airflow")
-    #      .save()
-    #      )
-    # except Exception as e:
-    #     logging.error(f"impossible d'ecrire dans PostgresSQL database à cause de : {e}")
-    #
-    # #write to cassandra
-    # print("Writing to cassandra DB .....")
-    #
-    # try:
-    #
-    #     (df.write
-    #      .mode("append")
-    #      .format("org.apache.spark.sql.cassandra")
-    #      .option("user", "admin")
-    #      .option("password", "admin")
-    #      .options(table="users", keyspace="test_keyspace")
-    #      .save()
-    #      )
-    #     print("data has been writed into cassandra")
-    # except Exception as e:
-    #     logging.error(f"impossible d'ecrire dans cassandra à cause de : {e}")
+        # #write to postgres DB
+        # print("Writing to postgres DB .....")
+        # try:
+        #     (df.write
+        #      .mode("append")
+        #      .format("jdbc")
+        #      .option("url", "jdbc:postgresql://postgres:5432/postgres")
+        #      .option("driver","org.postgresql.Driver")
+        #      .option("dbtable","test_keyspace.users")
+        #      .option("user", "airflow")
+        #      .option("password", "airflow")
+        #      .save()
+        #      )
+        # except Exception as e:
+        #     logging.error(f"impossible d'ecrire dans PostgresSQL database à cause de : {e}")
+        #
+        # #write to cassandra
+        # print("Writing to cassandra DB .....")
+        #
+        # try:
+        #
+        #     (df.write
+        #      .mode("append")
+        #      .format("org.apache.spark.sql.cassandra")
+        #      .option("user", "admin")
+        #      .option("password", "admin")
+        #      .options(table="users", keyspace="test_keyspace")
+        #      .save()
+        #      )
+        #     print("data has been writed into cassandra")
+        # except Exception as e:
+        #     logging.error(f"impossible d'ecrire dans cassandra à cause de : {e}")
 
-    # write to csv file
-    # df.write.mode("append").csv("user_output")
-    # df.write.format("csv").mode("complete").save("user_output1")
+        # write to csv file
+        # df.write.mode("append").csv("user_output")
+        # df.write.format("csv").mode("complete").save("user_output1")
+    return write_data
 
 
 def defin_schema_for_vehicule():
@@ -248,15 +261,21 @@ def write_data_console(dataframe):
            .option("checkpointLocation", "checkpoint_dir_kafka")
            .start())
     query.awaitTermination()
+# .trigger(once=True) \
+# .option("truncate", "false") \
 
-def write_to_db(joined_dataframe):
-    query = joined_dataframe.writeStream \
-        .foreachBatch(write_data_into_db) \
-        .trigger(once=True) \
-        .option("truncate", "false") \
-        .option("checkpointLocation", "checkpoint_dir_kafka") \
-        .start()
-    query.awaitTermination()
+
+def write_to_db(joined_dataframe, check):
+    #write_to_s3 = write_data_into_s3(check)
+    try:
+        query = joined_dataframe.writeStream \
+            .foreachBatch(write_data_into_s3(check)) \
+            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric/checkpointLocation/{check}") \
+            .start()
+        logging.info(f"✅ Stream {check} started and writing to S3.")
+        query.awaitTermination()
+    except Exception as e:
+        logging.error(f"❌ Stream {check} failed: {e}")
 
 def delete_duplicate_columns(df):
     from collections import Counter
@@ -388,10 +407,10 @@ def main():
             #write_to_influxdb(final_df_trajet)
 
             #join all data frame in one using the trajet ID as key join
-            joined_df = (final_df_trajet.join(final_df_cars, (final_df_trajet['tripId'] == final_df_cars['IDTrajet']))
-                                        .join(final_df_emergency,(final_df_trajet['tripId'] == final_df_emergency['emergencyTrip']))
-                                        .join(final_df_weather,(final_df_trajet['tripId'] == final_df_weather['weatherTrip']))
-                         )
+            # joined_df = (final_df_trajet.join(final_df_cars, (final_df_trajet['tripId'] == final_df_cars['IDTrajet']))
+            #                             .join(final_df_emergency,(final_df_trajet['tripId'] == final_df_emergency['emergencyTrip']))
+            #                             .join(final_df_weather,(final_df_trajet['tripId'] == final_df_weather['weatherTrip']))
+            #              )
 
             # colones = ('IDTrajet', 'emergencyTrip', 'weatherTrip')
             # dropped_colum=joined_df.drop(*colones)
@@ -409,8 +428,18 @@ def main():
             #                           )))
 
             #print("dernier schema")
-            joined_df.printSchema()
-            write_to_influxdb(joined_df)
+            # joined_df.printSchema()
+            #
+            # #execution en parallele
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                executor.submit(write_to_influxdb, final_df_trajet)
+                executor.submit(write_to_db, final_df_trajet,"trajet")
+                executor.submit(write_to_db, final_df_cars, "cars")
+                executor.submit(write_to_db, final_df_emergency, "emergency")
+                executor.submit(write_to_db, final_df_weather,"weather")
+
+            #write_to_influxdb(joined_df)
+            #write_to_db(joined_df)
 
 
 

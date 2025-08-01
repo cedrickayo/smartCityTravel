@@ -90,7 +90,7 @@ def write_data_into_influx(df, batchId):
     # .collect()	: Ramène tous les résultats dans une liste Python sur le driver
 
     df.printSchema()
-    # df.show(truncate=False) affiche le dataframe
+    # df.show(truncate=False) affiche le contenu du dataframe
     # df.select("tripId", "departure_name", "departure_latitude", "departure_longitude", "arrival_name",
     #                "arrival_latitude", "arrival_longitude", "heure_depart", "flag_arrivee").show(truncate=False)
     lines = transform_dataframe_to_rdd(df).map(transform_row_to_lp).filter(lambda x: x is not None).collect()
@@ -104,8 +104,8 @@ def write_data_into_influx(df, batchId):
     print(data)
 
     print("Writing to influxDB .....")
-    print(os.getenv("INFLUXDB_ORG"))
-    print(os.getenv('INFLUXDB_TOKEN'))
+    # print(os.getenv("INFLUXDB_ORG"))
+    # print(os.getenv('INFLUXDB_TOKEN'))
     try:
         res = requests.post(
             url="http://influxdb:8086/api/v2/write",
@@ -146,8 +146,6 @@ def write_data_into_influx(df, batchId):
 def write_to_influxdb(joined_dataframe):
     query = joined_dataframe.writeStream \
         .foreachBatch(write_data_into_influx) \
-        .option("truncate", "false") \
-        .trigger(once=True) \
         .option("checkpointLocation", "/opt/bitnami/spark/checkpoint_dir_influx") \
         .start()
     query.awaitTermination()
@@ -166,12 +164,6 @@ def write_to_influxdb(joined_dataframe):
 
 def applatir_json_data(df):
         #le df retourné à cette structure or il devait etre sous cle valeur, rasion pour laquelle on va le transformé
-        #
-        # StructField("tripId", StringType(), False),
-        # StructField("departure", gps_coordonate_schema(), False),
-        # StructField("arrival", gps_coordonate_schema(), False),
-        # StructField("heure_depart", DateType(), True),
-        # StructField("flag_arrivee", BooleanType(), True),
 
     df_flat = df.selectExpr(
         "tripId",
@@ -203,9 +195,16 @@ def transform_row_to_lp(df_flat):
     #donc chaque data passée en parametre sera transformé en texte
     #trajets,tripId=T123,departure=Paris,arrival=Lyon departure_latitude=48.85,departure_longitude=2.35,flag_arrivee=true 1721742750
     #measurement=>trajets, tags=> tripId=T123,departure=Paris,arrival=Lyon fields=>departure_latitude=48.85,departure_longitude=2.35 flag_arrivee=true timestamp=>1721742750
+
+    # | Élément           | Rôle                                                                          |
+    # | ----------------- | ----------------------------------------------------------------------------- |
+    # | **Bucket**        | Équivaut à une base de données — tu POSTes tes données ici                    |
+    # | **\_measurement** | Équivaut à une “table logique” (ex: `"trajets"`)                              |
+    # | **tags**          | Indexés — utilisés pour filtrer rapidement (ex: `tripId`, `departure`)        |
+    # | **fields**        | Valeurs numériques/textuelles — non indexées (ex: `latitude`, `flag_arrivee`) |
+    # | **timestamp**     | Clé primaire — chaque point est daté et stocké selon sa temporalité           |
+
     try:
-
-
         timestamp = int(df_flat['heure_depart'].timestamp())
 
         measurement = "trajets"
