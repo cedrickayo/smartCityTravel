@@ -187,8 +187,6 @@ services:
     env_file:
       - .env
 
-
-
     networks:
       - spark-network
 

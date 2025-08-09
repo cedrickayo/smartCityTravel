@@ -90,9 +90,6 @@ def write_data_into_s3(check):
             logging.error(f"impossible de se connecter au bucket s3 à cause de {e}")
 
 
-
-
-
         #print("Writing to Elasticsearch .....")
         # write_to_elastidsearch(df)
 

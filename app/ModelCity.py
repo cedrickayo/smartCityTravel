@@ -11,6 +11,8 @@ from datetime import datetime
 
 from faker import Faker
 from kafka import KafkaProducer
+from pyspark.sql.connect.functions import to_date
+from pyspark.sql.utils import to_str
 
 #le but est de savoir tout ce qui se passe lors d'un trajet d'une ville A vera une ville B
 #une ville est identifié par son ID, son nom, ses coordonnées géographiques
@@ -20,7 +22,6 @@ list_ville = [
     {"name": "Domicile", "latitude": "46.851863", "longitude": "-71.207157"},
     {"name": "Bureau", "latitude": "46.797777", "longitude": "-71.263931"},
     {"name": "Orsainville", "latitude": "46.883835", "longitude": "-71.290048"},
-    {"name": "Chateauguay", "latitude": "45.356965", "longitude": "-73.707444"},
     {"name": "Saint-Hyacinthe", "latitude": "45.615659", "longitude": "-72.967415"}
 ]
 
@@ -255,7 +256,7 @@ def main():
     #trajet_data,weather_data,emergency_data,vehicle_data
 
     while True:
-        end = start + 1800
+        end = start + 900
         while start <= end:
 
             #génération d'un voyage
@@ -383,7 +384,7 @@ def main():
 
 
 
-                    #je simule le deplacement et je break de la bouche startapp si j'ai deja fait 1h de tms afin de generer un nouveau trajet
+                    #je simule le deplacement et je break de la bouche startapp si j'ai deja fait 1h de tmps afin de generer un nouveau trajet
                     print("Simulation du deplacement")
                     with concurrent.futures.ThreadPoolExecutor() as executor:
                         deplacement = list(executor.map(simuler_deplacement1, cars,trajets))
@@ -399,7 +400,11 @@ def main():
                     start = time.time()
                 else :
                     print("Pas voiture en trajet actuellement.... attente de nouveau trajet")
+                    start = time.time()
+                    print(f" Actual time {start.st}")
+                    print(f" Wait until {end} to declench a new trip")
                     sleep(1)
+
 
         start = time.time()
 
