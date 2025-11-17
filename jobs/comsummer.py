@@ -28,8 +28,9 @@ def create_spark_session():
             .appName("Streaming Data from IoT devices to influxDB using KAFKA and Spark") \
             .master("local[*]") \
             .config("spark.jars.packages",
-                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0,org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-s3:1.12.661") \
+                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0,org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-s3:1.12.661,org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.9.2") \
             .config("spark.jars", "postgresql-42.6.0.jar") \
+            .config("spark.sql.extensions","org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
             .config("spark.cassandra.connection.host", "cassandra") \
             .config("spark.cassandra.connection.port", "9042") \
             .config("spark.es.nodes", "elasticsearch") \
@@ -274,6 +275,37 @@ def write_to_db(joined_dataframe, check):
     except Exception as e:
         logging.error(f"❌ Stream {check} failed: {e}")
 
+
+def write_data_into_iceberg_table(checkpoints, tab):
+    def write_data(df, batchId):
+        print("Batch id: " + str(batchId))
+
+        print(f"Writing to s3 into iceberg {tab} open table format .....")
+        try:
+            (df.write
+             .format("iceberg")
+             .mode("append")
+             .saveAsTable(f"s3a://spark-streaming-bucket-cedric/iceberg_table/{tab}")
+             )
+            logging.info(f"successfully write in {tab} iceberg table format")
+        except Exception as e:
+            logging.error(f"impossible de se connecter au bucket s3 à cause de {e}")
+
+    return write_data
+
+
+def write_to_iceberg(joined_dataframe, checkpoints, tab):
+    #write_to_s3 = write_data_into_s3(check)
+    try:
+        query = joined_dataframe.writeStream \
+            .foreachBatch(write_data_into_iceberg_table(checkpoints,tab)) \
+            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric/checkpointLocation/iceberg/{checkpoints}") \
+            .start()
+        logging.info(f"✅ Stream {checkpoints} started and writing to iceberg table {tab} .")
+        query.awaitTermination()
+    except Exception as e:
+        logging.error(f"❌ Stream {checkpoints} failed: {e}")
+
 def delete_duplicate_columns(df):
     from collections import Counter
     col_counts = Counter(df.columns)
@@ -434,6 +466,10 @@ def main():
                 executor.submit(write_to_db, final_df_cars, "cars")
                 executor.submit(write_to_db, final_df_emergency, "emergency")
                 executor.submit(write_to_db, final_df_weather,"weather")
+                #executor.submit(write_to_iceberg, final_df_trajet,"trajet","ice_trajet")
+                #executor.submit(write_to_iceberg, final_df_cars, "cars","ice_cars")
+                #executor.submit(write_to_iceberg, final_df_emergency, "emergency","ice_emergency")
+                #executor.submit(write_to_iceberg, final_df_weather,"weather","ice_weather")
 
             #write_to_influxdb(joined_df)
             #write_to_db(joined_df)

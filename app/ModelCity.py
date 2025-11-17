@@ -401,8 +401,8 @@ def main():
                 else :
                     print("Pas voiture en trajet actuellement.... attente de nouveau trajet")
                     start = time.time()
-                    print(f" Actual time {start.st}")
-                    print(f" Wait until {end} to declench a new trip")
+                    print(f" Actual time {start}")
+                    print(f" Wait until {end} to trigger a new trip")
                     sleep(1)
 
 

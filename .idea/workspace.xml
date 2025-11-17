@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="Joined all dataframe">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+    <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="Change content of .env">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/ModelCity.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelCity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobs/Stockage/mod_stockage.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/Stockage/mod_stockage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/jobs/comsummer.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/comsummer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +24,26 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cedrickayo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cedrickayo/smartCityTravel.git&quot;,
+    &quot;accountId&quot;: &quot;89569990-0f78-4899-9be7-6b3474ae3dfa&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -35,22 +53,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ModelCity.executor": "Run",
-    "Python.comsummer.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/cedri/PycharmProjects/smartCityTravel/spark-jobs",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ModelCity.executor&quot;: &quot;Run&quot;,
+    &quot;Python.comsummer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/cedri/PycharmProjects/smartCityTravel/spark-jobs&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "Shell Script"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Shell Script&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\cedri\PycharmProjects\smartCityTravel\spark-jobs" />
@@ -163,12 +181,55 @@
       <option name="project" value="LOCAL" />
       <updated>1753700713891</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update with aws s3 and glue">
+      <option name="closed" value="true" />
+      <created>1754023356416</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1754023356416</updated>
+    </task>
+    <task id="LOCAL-00006" summary="remove .env from version control">
+      <option name="closed" value="true" />
+      <created>1754025399017</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1754025399017</updated>
+    </task>
+    <task id="LOCAL-00007" summary="remove .env from version control">
+      <option name="closed" value="true" />
+      <created>1754025695815</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1754025695815</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Change content of .env">
+      <option name="closed" value="true" />
+      <created>1754198401250</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1754198401250</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
       <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
         <entry key="User">
           <value>
             <list>
@@ -192,7 +253,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -215,6 +276,9 @@
     <MESSAGE value="screaming to influxdb" />
     <MESSAGE value="Modify field type data type to timestam type" />
     <MESSAGE value="Joined all dataframe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Joined all dataframe" />
+    <MESSAGE value="update with aws s3 and glue" />
+    <MESSAGE value="remove .env from version control" />
+    <MESSAGE value="Change content of .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change content of .env" />
   </component>
 </project>
