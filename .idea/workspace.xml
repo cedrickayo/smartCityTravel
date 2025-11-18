@@ -7,8 +7,6 @@
     <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="Change content of .env">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ModelCity.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/ModelCity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jobs/comsummer.py" beforeDir="false" afterPath="$PROJECT_DIR$/jobs/comsummer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
