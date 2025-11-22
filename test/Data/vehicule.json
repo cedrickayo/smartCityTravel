@@ -1,0 +1,13 @@
+{
+
+  "immatriculation":"AKN10N",
+  "vin": "WBAPG735X9A401926",
+  "marque": "BMW",
+  "année": "2009",
+  "color": "NOIRE",
+  "fuelType": "ESSENCE",
+  "IDTrajet": "TripABC123",
+  "IDChauffeur": "202520436ANVC",
+  "speed":0.0,
+  "DateDebutTrajet": "2025-01-01T10:00:05"
+}

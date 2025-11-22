@@ -1,0 +1,11 @@
+{
+  "WeatherTime": "2025-01-01T10:00:05",
+  "wvehicleID": "AKN10N",
+  "weatherTrip": "TripABC123",
+  "weatherCondition": "SNOW",
+  "temperature": -2,
+  "wind_speed": 20,
+  "wind_dir": "W",
+  "wind_degree": 20,
+  "humidity": 20
+}

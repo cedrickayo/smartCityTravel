@@ -1,0 +1,15 @@
+{
+  "tripId":"TripABC123",
+  "departure":{
+    "name": "Domicile",
+    "latitude": "46.851863",
+    "longitude": "-71.207157"
+  },
+  "arrival":{
+    "name": "Bureau",
+    "latitude": "46.797777",
+    "longitude": "-71.263931"
+  },
+  "heure_depart":"2025-01-01T10:00:05",
+  "flag_arrivee": "False"
+}
