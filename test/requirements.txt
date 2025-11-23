@@ -4,3 +4,4 @@ pyspark==3.5.2
 pytest
 kafka-python
 Faker==37.1.0
+pandas==2.2.3
