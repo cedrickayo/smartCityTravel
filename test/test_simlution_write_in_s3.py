@@ -22,7 +22,7 @@ def test_write_stream_to_s3(mock_start):
 
     mock_start.return_value = fake_df
 
-    df_flat = applatir_json_data(mock_start.return_value)
+    df_flat = applatir_json_data(fake_df)
 
     df_converted = converted_dataframe(df_flat)
 
