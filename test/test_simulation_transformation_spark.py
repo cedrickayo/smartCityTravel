@@ -18,7 +18,7 @@ def test_applatir_json():
     assert "arrival_latitude" in df_flat.columns
 
 def test_converted_dataframe():
-    df = conn.read.json("tests/Data/trajet.json")
+    df = conn.read.json("test/Data/trajet.json")
 
     df_flat = applatir_json_data(df)
 

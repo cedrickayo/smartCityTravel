@@ -10,7 +10,7 @@ conn = SparkSession \
             .master("local[*]") \
             .getOrCreate()
 
-@patch("consumer.SparkSession.readStream")
+@patch("comsummer.SparkSession.readStream")
 def test_kafka_mock(mock_readstream):
     #simulation de lecture du flux streaming depuis kafka
     #Au lieu de lire les données depuis kafka, spark va lire le fichier static local grace à la méthode patch
