@@ -180,7 +180,7 @@ def defin_schema_for_emergency():
         StructField("EmergencyTime", TimestampType(), False),
         StructField("evehicleID", StringType(), False),
         StructField("emergencyTrip", StringType(), False),
-        StructField("emergencyType", IntegerType(), True),
+        StructField("emergencyType", StringType(), True),
         StructField("emergencyStatus", StringType(), True),
     ])
     return schema

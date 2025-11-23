@@ -1,0 +1,120 @@
+
+#version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - spark-network
+
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka #kafka  if we don't expose listener
+      KAFKA_LISTENER_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS:  PLAINTEXT://kafka:9092
+
+    networks:
+      - spark-network
+    expose:
+      - 9092
+
+
+
+  spark-master:
+    image: bitnami/spark:3.5.2
+    container_name: spark-master
+    command: bin/spark-class org.apache.spark.deploy.master.Master
+    environment:
+      SPARK_MODE: "master"
+    ports:
+      - "8081:8081"
+      - "7077:7077"
+    depends_on:
+      - kafka
+    volumes:
+      - jobs:/opt/bitnami/spark/jobs #repertoire dans lequel je mettrais mes applications spark
+      - spark-data:/opt/bitnami/spark/parquet
+      - spark_checkpoints:/opt/bitnami/spark/checkpoint_dir_influx
+    networks:
+      - spark-network
+
+
+  spark-consumer:
+    build:
+      context: ./jobs
+      dockerfile: Dockerfile #launch the dockerfile
+    container_name: spark-consumer
+    depends_on:
+      - kafka
+      - spark-master
+      - influxdb
+    volumes:
+      - jobs:/opt/bitnami/spark/jobs #repertoire dans lequel je mettrais mes applications spark
+    environment:
+      SPARK_MASTER_URL: spark://spark-master:7077
+
+    env_file:
+      - .env
+
+    networks:
+      - spark-network
+
+
+  minio:  #Stockage Objet
+    image: minio/minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data
+    ports:
+      - "9000:9000"
+    networks:
+      - spark-network
+
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+      - influxdb-config:/etc/influxdb2
+    restart: always
+    environment:
+      - INFLUXDB_DB=mydb
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
+      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
+      - INFLUXDB_USER=${INFLUXDB_USER}
+      - INFLUXDB_USER_PASSWORD=${INFLUXDB_USER_PASSWORD}
+    networks:
+      - spark-network
+
+
+networks:
+  spark-network:
+    driver: bridge
+
+volumes:
+  jobs:
+  spark-data:
+  influxdb-data:
+  influxdb-config:
+  spark_checkpoints:
