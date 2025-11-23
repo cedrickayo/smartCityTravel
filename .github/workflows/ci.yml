@@ -1,0 +1,33 @@
+name: Run Data pipeline
+
+on:
+  push:
+    branches:
+      -  main
+
+
+jobs:
+  run-data-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    #clone le repo dans la VM Ubuntu
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      #installer et configuration de python pour faciliter les installations
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          
+      - name: Install requirements
+        run: pip install pyspark pytest
+      
+      - name: Run pytest
+        run: pytest -v
+
+
+
+      
+      
