@@ -12,7 +12,7 @@ from pyspark.sql.types import StructField, StructType, StringType, IntegerType, 
     DoubleType, TimestampType
 import sys
 
-from Stockage.mod_stockage import applatir_json_data, write_to_influxdb, converted_dataframe
+from jobs.Stockage.mod_stockage import applatir_json_data, write_to_influxdb, converted_dataframe
 
 sys.path.append("/opt/bitnami/spark/jobs")
 #from storage.mod_stockage import write_to_elastidsearch
