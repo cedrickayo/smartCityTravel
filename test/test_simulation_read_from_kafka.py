@@ -15,7 +15,7 @@ def test_kafka_mock(mock_readstream):
     #simulation de lecture du flux streaming depuis kafka
     #Au lieu de lire les données depuis kafka, spark va lire le fichier static local grace à la méthode patch
 
-    mock_readstream.return_value = conn.read.json("tests/Data/trajet.json")
+    mock_readstream.return_value = conn.read.json("test/Data/trajet.json")
 
     df=read_data_from_kafka(conn,"trajet")
 

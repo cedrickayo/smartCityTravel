@@ -11,7 +11,7 @@ spark = SparkSession \
 def test_trajet_schema():
     schema = defin_schema_for_trajet()
 
-    df = spark.read.json("tests/Data/trajet.json", schema=schema)
+    df = spark.read.json("test/Data/trajet.json", schema=schema)
 
     assert df.count() == 1
     assert "tripId" in df.columns

@@ -10,7 +10,7 @@ conn = SparkSession \
 
 def test_applatir_json():
 
-    df = conn.read.json("tests/Data/trajet.json")
+    df = conn.read.json("test/Data/trajet.json")
 
     df_flat = applatir_json_data(df)
 
