@@ -1,4 +1,4 @@
-FROM bitnami/spark:3.5.2
+FROM apache/spark:3.5.2
 LABEL authors="cedri"
 
 USER root
