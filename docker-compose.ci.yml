@@ -67,9 +67,6 @@ services:
     environment:
       SPARK_MASTER_URL: spark://spark-master:7077
 
-    env_file:
-      - .env
-
     networks:
       - spark-network
 
