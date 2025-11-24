@@ -17,11 +17,11 @@ pipeline {
 						bat 'pip install -r test/requirements.txt'
                     } else {
                         bat 'echo "Running on Windows"'
-						bat 'pip install -r test/requirements.txt'
+						//bat 'pip install -r test/requirements.txt'
                         // Add your Windows-specific build commands here
                     }
                 }
-
+            bat 'pip install -r test/requirements.txt'
             }
 
 		}
