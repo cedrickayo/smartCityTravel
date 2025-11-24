@@ -49,7 +49,7 @@ def create_spark_session():
 
 def read_data_from_kafka(spark:SparkSession, topic):
     topics=topic
-    boostrap_server='kafka:9092'
+    boostrap_server='localhost:9092'
     try:
         df = (spark
               .readStream

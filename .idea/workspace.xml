@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="63bd96f7-8bc9-4396-a1c6-f00d0ea55335" name="Changes" comment="Change content of .env">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_kafka_integration.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_kafka_integration.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
