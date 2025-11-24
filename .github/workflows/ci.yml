@@ -14,7 +14,7 @@ jobs:
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       AWS_TOKEN_KEY: ${{ secrets.AWS_TOKEN_KEY }}
-      INFLUX_TOKEN: ${{ secrets.INFLUX_TOKEN }}
+      INFLUXDB_TOKEN: ${{ secrets.INFLUXDB_TOKEN }}
       INFLUXDB_ORG: ${{ secrets.INFLUXDB_ORG }}
       INFLUXDB_BUCKET: ${{ secrets.INFLUXDB_BUCKET }}
       INFLUXDB_ADMIN_USER: ${{ secrets.INFLUXDB_ADMIN_USER }}
