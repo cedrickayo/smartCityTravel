@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               git branch: 'main', 
-                   url: https://github.com/cedrickayo/smartCityTravel.git,
+               git branch: 'main',
+                   url: 'https://github.com/cedrickayo/smartCityTravel.git',
                    credentialsId: '450d3f5d-b61a-4c4b-af1c-2cb4956d8adc'
 				}
 			}
@@ -13,47 +13,48 @@ pipeline {
 			steps {
                 script {
                     if (isUnix()) {
-                        sh 'echo "Running on Unix"'
-						sh 'pip install -r test/requirements.txt'
+                        bat 'echo "Running on Unix"'
+						bat 'pip install -r test/requirements.txt'
                     } else {
                         bat 'echo "Running on Windows"'
+						bat 'pip install -r test/requirements.txt'
                         // Add your Windows-specific build commands here
                     }
                 }
 
             }
-		
+
 		}
 		stage('Set up Docker Compose'){
 			steps{
-				sh 'docker-compose -f docker-compose.ci.yml build'
-                sh 'docker-compose -f docker-compose.ci.yml up -d'
-				sh 'sleep 30'
+				bat 'docker-compose -f docker-compose.ci.yml build'
+                bat 'docker-compose -f docker-compose.ci.yml up -d'
+				bat 'sleep 30'
 			}
 		}
-		
+
 		stage('Run unit tests'){
 			steps{
-				sh 'pytest -v tests/test_spark_functions.py'
-				sh 'sleep 30'
+				bat 'pytest -v tests/test_spark_functions.py'
+				bat 'sleep 30'
 			}
-		
+
 		}
 		stage('Run integration tests'){
 			steps{
-				sh 'pytest -v tests/test_kafka_integrations.py'
-				sh 'sleep 30'
+				bat 'pytest -v tests/test_kafka_integrations.py'
+				bat 'sleep 30'
 			}
-		
+
 		}
-		
+
 		stage('end test shutdown docker-compose services'){
 			steps {
-                sh 'docker-compose -f docker-compose.ci.yml down'
+                bat 'docker-compose -f docker-compose.ci.yml down'
             }
-		
+
 		}
-		
-		
+
+
     }
 }
