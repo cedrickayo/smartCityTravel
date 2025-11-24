@@ -9,22 +9,22 @@ pipeline {
                    credentialsId: '450d3f5d-b61a-4c4b-af1c-2cb4956d8adc'
 				}
 			}
-		stage('Installation des dependances'){
-			steps {
-                script {
-                    if (isUnix()) {
-                        bat 'echo "Running on Unix"'
-						bat 'pip install -r test/requirements.txt'
-                    } else {
-                        bat 'echo "Running on Windows"'
-						//bat 'pip install -r test/requirements.txt'
-                        // Add your Windows-specific build commands here
-                    }
-                }
-            bat 'pip install -r test/requirements.txt'
-            }
-
-		}
+// 		stage('Installation des dependances'){
+// 			steps {
+//                 script {
+//                     if (isUnix()) {
+//                         bat 'echo "Running on Unix"'
+// 						bat 'pip install -r test/requirements.txt'
+//                     } else {
+//                         bat 'echo "Running on Windows"'
+// 						//bat 'pip install -r test/requirements.txt'
+//                         // Add your Windows-specific build commands here
+//                     }
+//                 }
+//             bat 'pip install -r test/requirements.txt'
+//             }
+//
+// 		}
 		stage('Set up Docker Compose'){
 			steps{
 				bat 'docker-compose -f docker-compose.ci.yml build'
