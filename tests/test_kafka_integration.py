@@ -10,8 +10,8 @@ from jobs.comsummer import create_spark_session, read_data_from_kafka, defin_sch
 @pytest.mark.integration
 def test_spark_reads_from_kafka():
     # Envoyer un message test dans Kafka
-
-    producer = KafkaProducer(bootstrap_servers=['kafka:9092'],
+    boostrap_server='localhost:9092'
+    producer = KafkaProducer(bootstrap_servers=[boostrap_server],
                              value_serializer=lambda v: json.dumps(v, default=serialize_datetime).encode('utf-8'))
     test_msg = {"tripId":"TripABC123", "departure":{"name": "Domicile", "latitude": "46.851863", "longitude": "-71.207157"}, "arrival":{"name": "Bureau", "latitude": "46.797777", "longitude": "-71.263931"}, "heure_depart":"2025-01-01T10:00:05", "flag_arrivee": "False"}
     producer.send('vehicle_data1', test_msg)
@@ -19,7 +19,8 @@ def test_spark_reads_from_kafka():
     time.sleep(5)  # attendre que Kafka reçoive le message
 
     spark = create_spark_session()
-    df = read_data_from_kafka(spark, 'vehicle_data1')
+    df = read_data_from_kafka(spark, 'vehicle_data1', boostrap_server)
+    df.printSchema()
     schema = defin_schema_for_trajet()
     final_df = final_data_frame_trajet(df, schema)
     assert final_df.count() == 1

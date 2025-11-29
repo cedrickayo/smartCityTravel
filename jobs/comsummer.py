@@ -47,9 +47,9 @@ def create_spark_session():
         logging.error(f"failed to create spark session {e}")
     return conn
 
-def read_data_from_kafka(spark:SparkSession, topic):
+def read_data_from_kafka(spark:SparkSession, topic, boostrap_server):
     topics=topic
-    boostrap_server='kafka:9092'
+    #boostrap_server='kafka:9092'
     try:
         df = (spark
               .readStream
@@ -399,6 +399,7 @@ def main():
     topic_trajet='trajet_data1'
     topic_weather='weather_data1'
     topic_emergency='emergency_data1'
+    boostrap_server = 'kafka:9092'
     try:
     #Création d'une session Spark
         spark = create_spark_session()
@@ -409,13 +410,13 @@ def main():
         else:
             print("c'est correct")
             #lecture des topics trajet
-            df_trajet=read_data_from_kafka(spark,topic_trajet)
+            df_trajet=read_data_from_kafka(spark,topic_trajet,boostrap_server)
 
-            df_cars=read_data_from_kafka(spark,topic_car)
+            df_cars=read_data_from_kafka(spark,topic_car,boostrap_server)
 
-            df_emergency=read_data_from_kafka(spark, topic_emergency)
+            df_emergency=read_data_from_kafka(spark, topic_emergency,boostrap_server)
 
-            df_weather=read_data_from_kafka(spark, topic_weather)
+            df_weather=read_data_from_kafka(spark, topic_weather,boostrap_server)
 
             #assocition des data au schema
             final_df_trajet=final_data_frame_trajet(df_trajet,defin_schema_for_trajet())
