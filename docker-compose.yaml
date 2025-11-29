@@ -131,7 +131,7 @@ services:
     environment:
       SPARK_MODE: "master"
     ports:
-      - "8080:8080"
+      - "8081:8081"
       - "7077:7077"
     depends_on:
       - kafka
@@ -154,7 +154,7 @@ services:
       networks:
         - spark-network
       ports:
-        - "8081:8081"
+        - "8082:8082"
       volumes:
         - jobs:/opt/bitnami/spark/jobs #repertoire dans lequel je mettrais mes applications spark
         - spark-data:/opt/bitnami/spark/parquet
@@ -172,7 +172,7 @@ services:
       networks:
         - spark-network
       ports:
-        - "8082:8082"
+        - "8083:8083"
       volumes:
         - jobs:/opt/bitnami/spark/jobs #repertoire dans lequel je mettrais mes applications spark
         - spark-data:/opt/bitnami/spark/parquet
