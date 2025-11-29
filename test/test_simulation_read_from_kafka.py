@@ -19,7 +19,7 @@ def test_kafka_mock(mock_load):
 
     mock_load.return_value=fake_df
 
-    df=read_data_from_kafka(conn,"trajet")
+    df=read_data_from_kafka(conn,"trajet",boostrap_server='kafka:9092')
 
     #verification que le dataframe contient exactement 1 ligne comme dans le fichier trajet.json
     assert df.count() == 1
