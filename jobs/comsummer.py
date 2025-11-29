@@ -84,7 +84,7 @@ def write_data_into_s3(check):
             (df.write
              .format("parquet")
              .mode("append")
-             .save(f"s3a://spark-streaming-bucket-cedric/raw_data/{check}")
+             .save(f"s3a://spark-streaming-bucket-cedric-6357277/raw_data/{check}")
              )
             logging.info("successfully write in parquet format")
         except Exception as e:
@@ -265,10 +265,11 @@ def write_data_console(dataframe):
 
 def write_to_db(joined_dataframe, check):
     #write_to_s3 = write_data_into_s3(check)
+    logging.info(f"Verifier si on peut ecrire dans S3.")
     try:
         query = joined_dataframe.writeStream \
             .foreachBatch(write_data_into_s3(check)) \
-            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric/checkpointLocation/{check}") \
+            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric-6357277/checkpointLocation/{check}") \
             .start()
         logging.info(f"✅ Stream {check} started and writing to S3.")
         query.awaitTermination()
@@ -285,7 +286,7 @@ def write_data_into_iceberg_table(checkpoints, tab):
             (df.write
              .format("iceberg")
              .mode("append")
-             .saveAsTable(f"s3a://spark-streaming-bucket-cedric/iceberg_table/{tab}")
+             .saveAsTable(f"s3a://spark-streaming-bucket-cedric-6357277/iceberg_table/{tab}")
              )
             logging.info(f"successfully write in {tab} iceberg table format")
         except Exception as e:
@@ -299,7 +300,7 @@ def write_to_iceberg(joined_dataframe, checkpoints, tab):
     try:
         query = joined_dataframe.writeStream \
             .foreachBatch(write_data_into_iceberg_table(checkpoints,tab)) \
-            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric/checkpointLocation/iceberg/{checkpoints}") \
+            .option("checkpointLocation", f"s3a://spark-streaming-bucket-cedric-6357277/checkpointLocation/iceberg/{checkpoints}") \
             .start()
         logging.info(f"✅ Stream {checkpoints} started and writing to iceberg table {tab} .")
         query.awaitTermination()

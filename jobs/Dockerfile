@@ -10,6 +10,6 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 RUN chmod +x /opt/bitnami/spark/jobs/entrypoint.bash
 
-ENTRYPOINT ["sh", "/opt/bitnami/spark/jobs/entrypoint.sh"]
+ENTRYPOINT ["bash", "/opt/bitnami/spark/jobs/entrypoint.bash"]
 
 CMD []
