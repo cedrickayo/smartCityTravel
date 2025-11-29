@@ -4,7 +4,7 @@ LABEL authors="cedri"
 USER root
 
 WORKDIR /opt/bitnami/spark/jobs/
-COPY . /opt/bitnami/spark/jobs/
+COPY . .
 
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 

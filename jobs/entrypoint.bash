@@ -12,7 +12,7 @@ echo $path_spark
 echo "$(date +'%F %T') 🔧 Execution de spark-submit ......."
 #/opt/bitnami/spark/bin/spark-submit \
 $path_spark \
-  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-s3:1.12.661 \
+  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.661 \
   --master spark://spark-master:7077 \
   /opt/bitnami/spark/jobs/comsummer.py
 

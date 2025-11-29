@@ -179,9 +179,9 @@ services:
         - spark_checkpoints:/opt/bitnami/spark/checkpoint_dir_influx
 
   spark-consumer:
-    build:
-      context: ./jobs
-      dockerfile: Dockerfile #launch the dockerfile
+    build: ./jobs
+      #context: ./jobs
+      #dockerfile: Dockerfile #launch the dockerfile
     container_name: spark-consumer
     depends_on:
       - kafka

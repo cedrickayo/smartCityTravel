@@ -12,7 +12,7 @@ from pyspark.sql.types import StructField, StructType, StringType, IntegerType, 
     DoubleType, TimestampType
 import sys
 
-from jobs.Stockage.mod_stockage import applatir_json_data, write_to_influxdb, converted_dataframe
+from Stockage.mod_stockage import applatir_json_data, write_to_influxdb, converted_dataframe
 
 sys.path.append("/opt/bitnami/spark/jobs")
 #from storage.mod_stockage import write_to_elastidsearch
@@ -28,7 +28,7 @@ def create_spark_session():
             .appName("Streaming Data from IoT devices to influxDB using KAFKA and Spark") \
             .master("local[*]") \
             .config("spark.jars.packages",
-                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0,org.apache.hadoop:hadoop-aws:3.3.6,com.amazonaws:aws-java-sdk-s3:1.12.661,org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.9.2") \
+                    "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.2,com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.elasticsearch:elasticsearch-spark-30_2.12:9.0.0,com.github.influxdata:spark-influxdb_2.1:0.3.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.661,org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.9.2") \
             .config("spark.jars", "postgresql-42.6.0.jar") \
             .config("spark.sql.extensions","org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
             .config("spark.cassandra.connection.host", "cassandra") \
