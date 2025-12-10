@@ -33,42 +33,46 @@ pipeline {
 		}
 		stage('Set up Docker Compose'){
 			steps{
-			    comande 'docker-compose -f docker-compose.ci.yml build'
-			    comande 'docker-compose -f docker-compose.ci.yml up -d'
-			    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
-// 				runCMD('docker-compose -f docker-compose.ci.yml build')
-//              runCMD('docker-compose -f docker-compose.ci.yml up -d')
-// 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
-
+			    script{
+                    comande 'docker-compose -f docker-compose.ci.yml build'
+                    comande 'docker-compose -f docker-compose.ci.yml up -d'
+                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+    // 				runCMD('docker-compose -f docker-compose.ci.yml build')
+    //              runCMD('docker-compose -f docker-compose.ci.yml up -d')
+    // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
+			    }
 			}
 		}
 
 		stage('Run unit tests'){
 			steps{
-			    comande 'pytest -v tests/test_spark_functions.py'
-			    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
-// 				runCMD('pytest -v tests/test_spark_functions.py')
-// 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
+			    script{
+                    comande 'pytest -v tests/test_spark_functions.py'
+                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+    // 				runCMD('pytest -v tests/test_spark_functions.py')
+    // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
+			    }
 			}
-
 		}
+
 		stage('Run integration tests'){
 			steps{
-			    comande 'pytest -v tests/test_kafka_integrations.py'
-			    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
-// 				runCMD('pytest -v tests/test_kafka_integrations.py')
-// 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
+			    script{
+                    comande 'pytest -v tests/test_kafka_integrations.py'
+                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+    // 				runCMD('pytest -v tests/test_kafka_integrations.py')
+    // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
+			    }
 			}
-
 		}
 
 		stage('end test shutdown docker-compose services'){
 			steps {
-			   comande 'docker-compose -f docker-compose.ci.yml down'
-//             runCMD('docker-compose -f docker-compose.ci.yml down')
-
+			    script{
+                   comande 'docker-compose -f docker-compose.ci.yml down'
+    //             runCMD('docker-compose -f docker-compose.ci.yml down')
+			    }
             }
-
 		}
     }
 }
