@@ -13,8 +13,8 @@ pipeline {
 			steps {
                 script {
                     // definition de lavariable selon l'environnement
-                    CMD = isUnix() ? "sh" : "bat"
-                    echo "Commande utilisée : ${CMD}"
+                    CMD = isUnix() ? 'sh' : 'bat'
+                    echo "Commande utilisée :" ${CMD}
 
 //                     if (isUnix()) {
 //                         bat 'echo "Running on Unix"'
@@ -30,30 +30,30 @@ pipeline {
 		}
 		stage('Set up Docker Compose'){
 			steps{
-				this."${CMD}" 'docker-compose -f docker-compose.ci.yml build'
-                this."${CMD}" 'docker-compose -f docker-compose.ci.yml up -d'
-				this."${CMD}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
+				${CMD} 'docker-compose -f docker-compose.ci.yml build'
+                ${CMD} 'docker-compose -f docker-compose.ci.yml up -d'
+				${CMD} (isUnix() ? 'sleep 30' : 'timeout /T 30')
 			}
 		}
 
 		stage('Run unit tests'){
 			steps{
-				this."${CMD}" 'pytest -v tests/test_spark_functions.py'
-				this."${CMD}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
+				${CMD} 'pytest -v tests/test_spark_functions.py'
+				${CMD} (isUnix() ? 'sleep 30' : 'timeout /T 30')
 			}
 
 		}
 		stage('Run integration tests'){
 			steps{
-				this."${CMD}" 'pytest -v tests/test_kafka_integrations.py'
-				this."${CMD}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
+				${CMD} 'pytest -v tests/test_kafka_integrations.py'
+				${CMD} (isUnix() ? 'sleep 30' : 'timeout /T 30')
 			}
 
 		}
 
 		stage('end test shutdown docker-compose services'){
 			steps {
-                this."${CMD}" 'docker-compose -f docker-compose.ci.yml down'
+                ${CMD} 'docker-compose -f docker-compose.ci.yml down'
             }
 
 		}
