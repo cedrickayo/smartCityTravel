@@ -36,7 +36,7 @@ pipeline {
 // 				runCMD('docker-compose -f docker-compose.ci.yml build')
 //                 runCMD('docker-compose -f docker-compose.ci.yml up -d')
 // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
-				this."${comande}" 'docker-compose -f docker-compose.ci.yml build'
+				comande 'docker-compose -f docker-compose.ci.yml build'
 			}
 		}
 
