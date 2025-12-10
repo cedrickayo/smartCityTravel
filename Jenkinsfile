@@ -19,7 +19,7 @@ pipeline {
 
                     if (isUnix()) {
                         comande = 'sh'
-//                         bat 'echo "Running on Unix"'
+//                      bat 'echo "Running on Unix"'
 // 						bat 'pip install -r test/requirements.txt'
                     } else {
                         comande = 'bat'
@@ -27,6 +27,7 @@ pipeline {
 						//bat 'pip install -r test/requirements.txt'
                         // Add your Windows-specific build commands here
                     }
+                    echo "Commande utilisée : ${comande}"
                 }
             }
 
@@ -34,9 +35,9 @@ pipeline {
 		stage('Set up Docker Compose'){
 			steps{
 			    script{
-                    comande 'docker-compose -f docker-compose.ci.yml build'
-                    comande 'docker-compose -f docker-compose.ci.yml up -d'
-                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+                    this."${comande}" 'docker-compose -f docker-compose.ci.yml build'
+                    this."${comande}" 'docker-compose -f docker-compose.ci.yml up -d'
+                    this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     // 				runCMD('docker-compose -f docker-compose.ci.yml build')
     //              runCMD('docker-compose -f docker-compose.ci.yml up -d')
     // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
@@ -47,8 +48,8 @@ pipeline {
 		stage('Run unit tests'){
 			steps{
 			    script{
-                    comande 'pytest -v tests/test_spark_functions.py'
-                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+                    this."${comande}" 'pytest -v tests/test_spark_functions.py'
+                    this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     // 				runCMD('pytest -v tests/test_spark_functions.py')
     // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
 			    }
@@ -58,8 +59,8 @@ pipeline {
 		stage('Run integration tests'){
 			steps{
 			    script{
-                    comande 'pytest -v tests/test_kafka_integrations.py'
-                    comande (isUnix() ? 'sleep 30' : 'timeout /T 30')
+                    this."${comande}" 'pytest -v tests/test_kafka_integrations.py'
+                    this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     // 				runCMD('pytest -v tests/test_kafka_integrations.py')
     // 				runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
 			    }
@@ -69,7 +70,7 @@ pipeline {
 		stage('end test shutdown docker-compose services'){
 			steps {
 			    script{
-                   comande 'docker-compose -f docker-compose.ci.yml down'
+                   this."${comande}" 'docker-compose -f docker-compose.ci.yml down'
     //             runCMD('docker-compose -f docker-compose.ci.yml down')
 			    }
             }
