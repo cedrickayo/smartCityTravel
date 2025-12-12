@@ -1,6 +1,11 @@
 pipeline {
     agent any
-
+//     environment {
+//         //PATH = "${env.PATH}:/usr/bin/python3"
+// 		//PYTHON_HOME='/usr/bin/python3'
+// 		JAVA_HOME='/usr/bin/java'
+//         PATH = "${env.PATH}:${JAVA_HOME}"
+//     }
     stages {
         stage('Checkout') {
             steps {
@@ -73,6 +78,7 @@ pipeline {
                 sh '''
                     python3 --version
                     java -version
+                    which java
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
