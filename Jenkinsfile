@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage('Utilisation des variables'){
+        stage('Déclaration et Utilisation des variables'){
             environment{
                 INFLUXDB_ADMIN_USER="${env.INFLUXDB_ADMIN_USER}"
                 INFLUXDB_ADMIN_PASSWORD="${env.INFLUXDB_ADMIN_PASSWORD}"
@@ -63,9 +63,14 @@ pipeline {
                     }
                     echo "Commande utilisée : ${comande}"
                 }
+
+                this."${comande}" 'python3 --version'
+                this."${comande}" 'python3 -m venv venv && . venv/bin/activate'
+                this."${comande}" 'pip install pytest'
             }
 
         }
+
         stage('Set up Docker Compose'){
             steps{
                 script{
