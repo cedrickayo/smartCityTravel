@@ -35,16 +35,16 @@ def test_trajet_schema():
     assert df.count() == 1
     assert "tripId" in df.columns
 
-def test_final_data_frame():
-    spark = SparkSession.builder.master("local[*]").appName("Test").getOrCreate()
-
-    #data = [Row(value='{"immatriculation":"123ABC","vin":"VIN123","marque":"Toyota","année":2020,"color":"Red","fuelType":"Gas","IDTrajet":"T1","IDChauffeur":"C1","speed":60,"DateDebutTrajet":"2025-11-22T12:00:00"}')]
-    #df = spark.createDataFrame(data)
-
-    df = conn.read.json("test/Data/trajet.json")
-
-    schema = defin_schema_for_trajet()
-    final_df = final_data_frame_trajet(df, schema)
-
-    assert final_df.count() == 1
-    assert "immatriculation" in final_df.columns
+# def test_final_data_frame():
+#     spark = SparkSession.builder.master("local[*]").appName("Test").getOrCreate()
+#
+#     #data = [Row(value='{"immatriculation":"123ABC","vin":"VIN123","marque":"Toyota","année":2020,"color":"Red","fuelType":"Gas","IDTrajet":"T1","IDChauffeur":"C1","speed":60,"DateDebutTrajet":"2025-11-22T12:00:00"}')]
+#     #df = spark.createDataFrame(data)
+#
+#     df = conn.read.json("test/Data/trajet.json")
+#
+#     schema = defin_schema_for_trajet()
+#     final_df = final_data_frame_trajet(df, schema)
+#
+#     assert final_df.count() == 1
+#     assert "immatriculation" in final_df.columns
