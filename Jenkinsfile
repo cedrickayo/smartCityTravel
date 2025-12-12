@@ -94,7 +94,7 @@ pipeline {
         stage('Run unit tests'){
             steps{
                 script{
-                    this."${comande}" 'pytest -v tests/test_spark_functions.py'
+                    this."${comande}" 'venv/bin/python -m pytest -v tests/test_spark_functions.py'
                     this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     //              runCMD('pytest -v tests/test_spark_functions.py')
     //              runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
@@ -105,7 +105,7 @@ pipeline {
         stage('Run integration tests'){
             steps{
                 script{
-                    this."${comande}" 'pytest -v tests/test_kafka_integrations.py'
+                    this."${comande}" 'venv/bin/python -m pytest -v tests/test_kafka_integrations.py'
                     this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     //              runCMD('pytest -v tests/test_kafka_integrations.py')
     //              runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
