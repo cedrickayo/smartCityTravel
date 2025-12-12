@@ -12,7 +12,7 @@ pipeline {
 
         stage('Loading .env secret'){
             steps{
-                withCredentials([file(credentialsId:'6898428c-8f59-4396-b2db-c75599ce7b8f',variable: 'ENV_FILE')]){
+                withCredentials([file(credentialsId: '6898428c-8f59-4396-b2db-c75599ce7b8f', variable: 'ENV_FILE')]){
                     script{
                         // load .env file in
                         def props = readProperties file: "${ENV_FILE}"
