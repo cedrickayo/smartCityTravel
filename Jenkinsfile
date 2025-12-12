@@ -72,6 +72,7 @@ pipeline {
             steps{
                 sh '''
                     python3 --version
+                    java -version
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
