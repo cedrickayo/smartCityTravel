@@ -70,11 +70,13 @@ pipeline {
 
         stage('Activation de environnement virtual pour execution des commandes et mise à jour'){
             steps{
-                script{
-                    this."${comande}" 'python3 --version'
-                    this."${comande}" 'python3 -m venv venv && . venv/bin/activate'
-                    this."${comande}" 'pip install pytest'
-                }
+                this."${comande}" '''
+                    python3 --version
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install pytest
+                '''
             }
         }
 
