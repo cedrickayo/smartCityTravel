@@ -116,7 +116,7 @@ pipeline {
         stage('Run integration tests'){
             steps{
                 script{
-                    this."${comande}" 'venv/bin/python -m pytest -v tests/test_kafka_integrations.py'
+                    this."${comande}" 'venv/bin/python -m pytest -v tests/test_kafka_integration.py'
                     this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     //              runCMD('pytest -v tests/test_kafka_integrations.py')
     //              runCMD((isUnix() ? 'sleep 30' : 'timeout /T 30'))
