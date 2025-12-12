@@ -80,11 +80,20 @@ pipeline {
             }
         }
 
+        stage('Clean Docker Compose') {
+            steps {
+                script {
+                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down --volumes --remove-orphans || true'
+                }
+            }
+        }
+
+
         stage('Set up Docker Compose'){
             steps{
                 script{
-                    this."${comande}" 'docker-compose -f docker-compose.ci.yml build'
-                    this."${comande}" 'docker-compose -f docker-compose.ci.yml up -d'
+                    this."${comande}" 'docker compose -f docker-compose.ci.yml build --no-cache'
+                    this."${comande}" 'docker compose -f docker-compose.ci.yml up -d'
                     this."${comande}" (isUnix() ? 'sleep 30' : 'timeout /T 30')
     //              runCMD('docker-compose -f docker-compose.ci.yml build')
     //              runCMD('docker-compose -f docker-compose.ci.yml up -d')
