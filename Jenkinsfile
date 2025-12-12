@@ -30,13 +30,15 @@ pipeline {
 
         stage('Utilisation des variables'){
             steps{
-                INFLUXDB_ADMIN_USER=${env.INFLUXDB_ADMIN_USER}
-                INFLUXDB_ADMIN_PASSWORD=${env.INFLUXDB_ADMIN_PASSWORD}
-                INFLUXDB_TOKEN=${env.INFLUXDB_TOKEN}
-                INFLUXDB_ORG=${env.INFLUXDB_ORG}
-                INFLUXDB_BUCKET=${env.INFLUXDB_BUCKET}
-                INFLUXDB_USER=${env.INFLUXDB_USER}
-                INFLUXDB_USER_PASSWORD=${env.INFLUXDB_USER_PASSWORD}
+                environment{
+                    INFLUXDB_ADMIN_USER=${env.INFLUXDB_ADMIN_USER}
+                    INFLUXDB_ADMIN_PASSWORD=${env.INFLUXDB_ADMIN_PASSWORD}
+                    INFLUXDB_TOKEN=${env.INFLUXDB_TOKEN}
+                    INFLUXDB_ORG=${env.INFLUXDB_ORG}
+                    INFLUXDB_BUCKET=${env.INFLUXDB_BUCKET}
+                    INFLUXDB_USER=${env.INFLUXDB_USER}
+                    INFLUXDB_USER_PASSWORD=${env.INFLUXDB_USER_PASSWORD}
+                }
             }
         }
 
