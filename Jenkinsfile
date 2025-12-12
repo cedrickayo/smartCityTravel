@@ -70,7 +70,7 @@ pipeline {
 
         stage('Activation de environnement virtual pour execution des commandes et mise à jour'){
             steps{
-                this."${comande}" '''
+                sh '''
                     python3 --version
                     python3 -m venv venv
                     . venv/bin/activate
