@@ -12,16 +12,8 @@ pipeline {
                git branch: 'main',
                    url: 'https://github.com/cedrickayo/smartCityTravel.git',
                    credentialsId: '0f9c7855-b671-4909-936f-d6d5c1613821'
-            }
-        }
-
-        stage('Clean Docker Compose') {
-            steps {
-                script {
-                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down --volumes --remove-orphans || true'
                 }
             }
-        }
 
         stage('Loading .env secret'){
             steps{
@@ -95,6 +87,13 @@ pipeline {
             }
         }
 
+        stage('Clean Docker Compose') {
+            steps {
+                script {
+                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down --volumes --remove-orphans || true'
+                }
+            }
+        }
 
 
         stage('Set up Docker Compose'){
