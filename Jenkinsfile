@@ -3,7 +3,7 @@ pipeline {
 //     environment {
 //         //PATH = "${env.PATH}:/usr/bin/python3"
 // 		//PYTHON_HOME='/usr/bin/python3'
-// 		JAVA_HOME='/usr/bin/java'
+// 		JAVA_HOME='/usr/bin/'
 //         PATH = "${env.PATH}:${JAVA_HOME}"
 //     }
     stages {
@@ -12,8 +12,16 @@ pipeline {
                git branch: 'main',
                    url: 'https://github.com/cedrickayo/smartCityTravel.git',
                    credentialsId: '0f9c7855-b671-4909-936f-d6d5c1613821'
+            }
+        }
+
+        stage('Clean Docker Compose') {
+            steps {
+                script {
+                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down --volumes --remove-orphans || true'
                 }
             }
+        }
 
         stage('Loading .env secret'){
             steps{
@@ -87,13 +95,6 @@ pipeline {
             }
         }
 
-        stage('Clean Docker Compose') {
-            steps {
-                script {
-                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down --volumes --remove-orphans || true'
-                }
-            }
-        }
 
 
         stage('Set up Docker Compose'){
@@ -131,7 +132,7 @@ pipeline {
             }
         }
 
-        stage('end test shutdown docker-compose services'){
+        stage('End test shutdown docker-compose services'){
             steps {
                 script{
                    this."${comande}" 'docker-compose -f docker-compose.ci.yml down'
